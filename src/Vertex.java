@@ -16,6 +16,7 @@ public class Vertex {
     //Additions for SP2
     public int degree; // Number of incoming edges to the vertex
     public int top; // The topological number of the vertex
+    public int componentNumber;
 
     /**
      * Constructor for the vertex
@@ -31,6 +32,8 @@ public class Vertex {
 	revAdj = new ArrayList<Edge>();   /* only for directed graphs */
 	
 	degree = 0;
+    //initializing component number to 0 to mark it uninitialized
+    componentNumber = 0;
     }
 
     /**
