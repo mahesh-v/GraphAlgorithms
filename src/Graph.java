@@ -146,10 +146,7 @@ class Graph implements Iterable<Vertex> {
 			System.out.print("Vertex: "+vertex.name);
 			System.out.print(": ");
 			for (Edge e : vertex.Adj) {
-				if(e.To != vertex)
-					System.out.print(e.To+" ");
-				else
-					System.out.print(e.From+" ");
+				System.out.print(e.otherEnd(vertex)+" ");
 			}
 			System.out.println();
 		}
