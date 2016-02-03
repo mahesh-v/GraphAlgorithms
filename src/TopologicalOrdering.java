@@ -82,7 +82,7 @@ public class TopologicalOrdering {
 	private static void dfsVisit(Vertex vertex, Stack<Vertex> s) {
 		vertex.seen = true;
 		for (Edge e : vertex.Adj) {
-			Vertex u = e.To;
+			Vertex u = e.otherEnd(vertex);
 			if(!u.seen){
 				u.parent = vertex;
 				dfsVisit(u, s);
