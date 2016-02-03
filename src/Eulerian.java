@@ -5,6 +5,10 @@ import java.util.List;
 import java.util.Scanner;
 
 
+/**
+ * @author Darshan and Mahesh
+ *
+ */
 public class Eulerian {
 
 	public static void main(String[] args) throws FileNotFoundException {
@@ -20,12 +24,13 @@ public class Eulerian {
 	 * The second part tests if it is a Eulerian, or has a Eulerian path.
 	 * If it does not, it states how many vertices are of odd degree.
 	 * 
-	 * @param g The graph to test if it is a Eulerian
+	 * @param g The undirected Graph to be tested
 	 */
 	public static void testEulerian(Graph g){
 		for (Vertex vertex : g) {
 			vertex.seen = false;
 		}
+		
 		int numberOfComponents = 0;
 		List<Vertex> oddVertices = new ArrayList<>();
 		for (Vertex vertex : g) {
@@ -41,6 +46,7 @@ public class Eulerian {
 				oddVertices.add(vertex);
 			}
 		}
+		
 		if(oddVertices.size() == 0)
 			System.out.println("Graph is a Eulerian");
 		else if (oddVertices.size() == 2)

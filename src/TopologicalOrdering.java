@@ -7,17 +7,25 @@ import java.util.Scanner;
 import java.util.Stack;
 
 
+/**
+ * @author Darshan and Mahesh
+ *
+ */
 public class TopologicalOrdering {
 
 	public static void main(String[] args) throws FileNotFoundException {
 		Scanner scanner = new Scanner(new File("input.txt"));
 		Graph g = Graph.readGraph(scanner, true);
+		
 		List<Vertex> orderedVertices = toplogicalOrder1(g);
+		System.out.print("Vertices in topo order: ");
 		for (Vertex vertex : orderedVertices) {
 			System.out.print(vertex.name+" ");
 		}
 		System.out.println();
+		
 		Stack<Vertex> orederedVertices2 = toplogicalOrder2(g);
+		System.out.print("Vertices in topo order: ");
 		while(!orederedVertices2.empty()){
 			Vertex v = orederedVertices2.pop();
 			System.out.print(v.name+" ");
@@ -28,7 +36,7 @@ public class TopologicalOrdering {
 	 * Algorithm 1. Remove vertices with no incoming edges, one at a
 	 * time, along with their incident edges, and add them to a list.
 	 * 
-	 * @param g Graph on which the algorithm is to be run.
+	 * @param g Directed Graph on which the algorithm is to be run.
 	 * @return List of Vertices in topological order
 	 */
 	static List<Vertex> toplogicalOrder1(Graph g) { 
@@ -61,7 +69,7 @@ public class TopologicalOrdering {
 	 * Algorithm 2. Run DFS on g and push nodes to a stack in the
 	 * order in which they finish. 
 	 * 
-	 * @param g Graph on which the algorithm is to be run
+	 * @param g Directed Graph on which the algorithm is to be run
 	 * @return A stack containing the vertices that would 
 	 * appear in topological order
 	 */
