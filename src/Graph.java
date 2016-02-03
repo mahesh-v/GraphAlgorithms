@@ -138,6 +138,9 @@ class Graph implements Iterable<Vertex> {
 	return g;
     }
 
+	/**
+	 * Prints the every vertex along with its adjacent vertices.
+	 */
 	public void printGraph() {
 		for (Vertex vertex : this) {
 			System.out.print("Vertex: "+vertex.name);

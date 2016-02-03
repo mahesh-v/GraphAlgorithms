@@ -12,7 +12,7 @@ public class TopologicalOrdering {
 	public static void main(String[] args) throws FileNotFoundException {
 		Scanner scanner = new Scanner(new File("input.txt"));
 		Graph g = Graph.readGraph(scanner, true);
-//		g.printGraph();
+		g.printGraph();
 		List<Vertex> orderedVertices = toplogicalOrder1(g);
 		for (Vertex vertex : orderedVertices) {
 			System.out.print(vertex.name+" ");
@@ -25,10 +25,14 @@ public class TopologicalOrdering {
 		}
 	}
 	
+	/**
+	 * Algorithm 1. Remove vertices with no incoming edges, one at a
+	 * time, along with their incident edges, and add them to a list.
+	 * 
+	 * @param g Graph on which the algorithm is to be run.
+	 * @return List of Vertices in topological order
+	 */
 	static List<Vertex> toplogicalOrder1(Graph g) { 
-	  /* Algorithm 1. Remove vertices with no incoming edges, one at a
-	 	time, along with their incident edges, and add them to a list.
-	   */
 		List<Vertex> topList = new ArrayList<Vertex>();
 		List<Vertex> vertices = g.verts;
 		List<Vertex> queue = new LinkedList<Vertex>();
@@ -54,10 +58,15 @@ public class TopologicalOrdering {
 		return topList;
 	}
 
-	static Stack<Vertex> toplogicalOrder2(Graph g) {
-	 /* Algorithm 2. Run DFS on g and push nodes to a stack in the
-	 	 order in which they finish.  Write code without using global variables.
+	/**
+	 * Algorithm 2. Run DFS on g and push nodes to a stack in the
+	 * order in which they finish. 
+	 * 
+	 * @param g Graph on which the algorithm is to be run
+	 * @return A stack containing the vertices that would 
+	 * appear in topological order
 	 */
+	static Stack<Vertex> toplogicalOrder2(Graph g) {
 		for (Vertex vertex : g) {
 			vertex.seen = false;
 			vertex.parent = null;
@@ -65,18 +74,18 @@ public class TopologicalOrdering {
 		Stack<Vertex> s = new Stack<>();
 		for (Vertex vertex : g) {
 			if(!vertex.seen)
-				DFSVisit(vertex, s);
+				dfsVisit(vertex, s);
 		}
 		return s;
 	}
 
-	private static void DFSVisit(Vertex vertex, Stack<Vertex> s) {
+	private static void dfsVisit(Vertex vertex, Stack<Vertex> s) {
 		vertex.seen = true;
 		for (Edge e : vertex.Adj) {
 			Vertex u = e.To;
 			if(!u.seen){
 				u.parent = vertex;
-				DFSVisit(u, s);
+				dfsVisit(u, s);
 			}
 		}
 		s.add(vertex);
