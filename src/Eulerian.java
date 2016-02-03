@@ -10,7 +10,7 @@ public class Eulerian {
 	public static void main(String[] args) throws FileNotFoundException {
 		Scanner scanner = new Scanner(new File("eulerianTest4.txt"));
 		Graph g = Graph.readGraph(scanner, false);
-//		g.printGraph();
+		g.printGraph();
 		testEulerian(g);
 	}
 	

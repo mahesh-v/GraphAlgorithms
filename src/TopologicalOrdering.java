@@ -12,7 +12,6 @@ public class TopologicalOrdering {
 	public static void main(String[] args) throws FileNotFoundException {
 		Scanner scanner = new Scanner(new File("input.txt"));
 		Graph g = Graph.readGraph(scanner, true);
-		g.printGraph();
 		List<Vertex> orderedVertices = toplogicalOrder1(g);
 		for (Vertex vertex : orderedVertices) {
 			System.out.print(vertex.name+" ");
@@ -35,7 +34,7 @@ public class TopologicalOrdering {
 	static List<Vertex> toplogicalOrder1(Graph g) { 
 		List<Vertex> topList = new ArrayList<Vertex>();
 		List<Vertex> vertices = g.verts;
-		List<Vertex> queue = new LinkedList<Vertex>();
+		LinkedList<Vertex> queue = new LinkedList<Vertex>();
 		for (Vertex vertex : vertices) {
 			if(vertex==null)
 				continue;
@@ -45,11 +44,11 @@ public class TopologicalOrdering {
 		}
 		int top=1;
 		while(!queue.isEmpty()){
-			Vertex v = queue.remove(0);
+			Vertex v = queue.removeFirst();
 			v.top = top++;
 			topList.add(v);
 			for (Edge e : v.Adj) {
-				Vertex to_vertex = e.To;
+				Vertex to_vertex = e.otherEnd(v);
 				to_vertex.degree--;
 				if(to_vertex.degree == 0)
 					queue.add(to_vertex);
