@@ -16,7 +16,7 @@ import java.util.Stack;
 public class TopologicalOrdering {
 
 	public static void main(String[] args) throws FileNotFoundException {
-		Scanner scanner = new Scanner(new File("input.txt"));
+		Scanner scanner = new Scanner(new File("test/input.txt"));
 		Graph g = Graph.readGraph(scanner, true);
 		
 		List<Vertex> orderedVertices = toplogicalOrder1(g);

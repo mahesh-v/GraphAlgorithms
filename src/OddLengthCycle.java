@@ -13,7 +13,7 @@ import java.util.Stack;
 public class OddLengthCycle {
 
     public static void main (String[] args) throws FileNotFoundException{
-        Scanner scanner = new Scanner(new File("oddLengthCycleTest1.txt"));
+        Scanner scanner = new Scanner(new File("test/oddLengthCycleTest1.txt"));
         Graph g = Graph.readGraph(scanner, false);
         List<Vertex> cycle = oddLengthCycle(g);
         if(cycle == null) {

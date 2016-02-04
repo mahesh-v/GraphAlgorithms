@@ -11,7 +11,7 @@ import java.util.*;
 public class StronglyConnectedComponents {
 
     public static void main (String[] args) throws FileNotFoundException{
-        Scanner scanner = new Scanner(new File("stronglyConnectedComponentsTest1.txt"));
+        Scanner scanner = new Scanner(new File("test/stronglyConnectedComponentsTest1.txt"));
         Graph g = Graph.readGraph(scanner, true);
         
         int numberOfConnectedComponents = stronglyConnectedComponents(g);

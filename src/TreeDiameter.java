@@ -13,7 +13,7 @@ import java.util.Scanner;
 public class TreeDiameter {
 
 	public static void main(String[] args) throws FileNotFoundException {
-		Scanner scanner = new Scanner(new File("treeDiameterTest2.txt"));
+		Scanner scanner = new Scanner(new File("test/treeDiameterTest2.txt"));
 		Graph g = Graph.readGraph(scanner, false);
 		System.out.println("Diameter of graph = "+diameter(g));
 	}
