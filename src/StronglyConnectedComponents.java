@@ -3,46 +3,26 @@ import java.io.FileNotFoundException;
 import java.util.*;
 
 /**
- * Created by mahesh and darshan on 2/2/16.
+ * Solution to problem c.
+ * 
+ * @author Darshan and Mahesh
+ * 
  */
 public class StronglyConnectedComponents {
 
     public static void main (String[] args) throws FileNotFoundException{
-        Scanner scanner = new Scanner(new File("input.txt"));
+        Scanner scanner = new Scanner(new File("stronglyConnectedComponentsTest1.txt"));
         Graph g = Graph.readGraph(scanner, true);
-        System.out.println("Input Graph:");
-        g.printGraph();
+        
         int numberOfConnectedComponents = stronglyConnectedComponents(g);
         System.out.println("Number of strongly connected componenets:" + numberOfConnectedComponents);
-
-        //Print the Strongly connected components in the Graph
-        ArrayList<ArrayList<Vertex>> components = new ArrayList<ArrayList<Vertex>>(numberOfConnectedComponents);
-        while (numberOfConnectedComponents > 0) {
-            components.add(new ArrayList<Vertex>());
-            numberOfConnectedComponents--;
-        }
-        for (Vertex v : g) {
-            ArrayList<Vertex> currentVertexList = components.get(v.componentNumber-1);
-            if (currentVertexList == null) {
-                currentVertexList = new ArrayList<Vertex>();
-            }
-
-            currentVertexList.add(v);
-
-        }
-        Iterator<ArrayList<Vertex>> listsIterator = components.iterator();
-        while (listsIterator.hasNext()) {
-            ArrayList<Vertex> scc = listsIterator.next();
-            Iterator<Vertex> vertexIterator = scc.iterator();
-            System.out.print("Strongly connected Component: ");
-            while (vertexIterator.hasNext()) {
-                Vertex v = vertexIterator.next();
-                System.out.print(v.name + " ");
-            }
-            System.out.println("");
-        }
-
+        
+        for (Vertex vertex : g) {
+			System.out.println("Vertex "+vertex.name +": Component"+vertex.componentNumber);
+		}
+        
     }
+    
     /**
      * Computes and returns number of strongly connected components in a given graph
      *
@@ -90,8 +70,10 @@ public class StronglyConnectedComponents {
             }
         }
     }
+    
     /**
     * DFS from the given vertex and puts all the finished vertex into stack
+    * 
     * @param vertex source vertex to start DFS visit
     * @param s stack to push all vertices in the finishing order
     * */

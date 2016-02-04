@@ -20,7 +20,8 @@ There are 8 source(.java) files and >10 test files which are in .txt format:
 	Provides a method which takes a tree as input and returns the length of the longest diameter of the tree.
 	Assumption - The graph provided is connected.
 
-6. .java - contains solution to problem c.
+6. StronglyConnectedComponents.java - contains solution to problem c.
+	Provides a method to assign component numbers to each vertex that belongs to a strongly connected component of a directed graph.
 
 7. OddLengthCycle.java - contains a partial solution to problem d.
 	Provides a method which takes an undirected graph as input and returns tests if the graph contains a cycle of odd length.

@@ -6,6 +6,8 @@ import java.util.Scanner;
 import java.util.Stack;
 
 /**
+ * Solution to problem d
+ * 
  * @author Darshan and Mahesh
  */
 public class OddLengthCycle {

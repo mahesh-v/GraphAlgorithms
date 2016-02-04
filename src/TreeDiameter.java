@@ -5,6 +5,8 @@ import java.util.Scanner;
 
 
 /**
+ * Solution to problem b
+ * 
  * @author Darshan and Mahesh
  *
  */
