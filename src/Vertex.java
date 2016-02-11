@@ -17,6 +17,9 @@ public class Vertex {
     public int degree; // Number of incoming edges to the vertex
     public int top; // The topological number of the vertex
     public int componentNumber;
+    
+    //Additions for LP0
+    public int numOfSeenEdges;
 
     /**
      * Constructor for the vertex
@@ -34,6 +37,8 @@ public class Vertex {
 	degree = 0;
     //initializing component number to 0 to mark it uninitialized
     componentNumber = 0;
+    
+    numOfSeenEdges = 0;
     }
 
     /**
