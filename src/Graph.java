@@ -27,6 +27,12 @@ class Graph implements Iterable<Vertex> {
 	for (int i = 1; i <= size; i++)
 	    verts.add(i, new Vertex(i));
     }
+    
+    public Vertex getSourceVertex(){
+    	if(numNodes==0)
+    		return null;
+    	return verts.get(1);
+    }
 
     /**
      * Method to add an edge to the graph
