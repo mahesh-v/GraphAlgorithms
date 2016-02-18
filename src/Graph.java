@@ -51,8 +51,6 @@ class Graph implements Iterable<Vertex> {
 	Edge e = new Edge(u, v, weight);
 	u.Adj.add(e);
 	v.Adj.add(e);
-	u.Unseen.add(e);
-	v.Unseen.add(e);
     }
 
     /**

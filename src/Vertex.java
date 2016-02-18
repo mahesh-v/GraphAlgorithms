@@ -20,7 +20,7 @@ public class Vertex {
     
     //Additions for LP0
     public int numOfSeenEdges;
-    public HashSet<Edge> Unseen;
+    private int unseenPointer;
 
     /**
      * Constructor for the vertex
@@ -40,7 +40,7 @@ public class Vertex {
     componentNumber = 0;
     
     numOfSeenEdges = 0;
-    Unseen = new HashSet<Edge>();
+    unseenPointer = 0;
     }
 
     /**
@@ -48,5 +48,17 @@ public class Vertex {
      */
     public String toString() {
 	return Integer.toString(name);
+    }
+    
+    public Edge getNextUnseenEdge(){
+    	Edge e = Adj.get(unseenPointer);
+    	int noOfAttempts = 0;
+    	while(e.seen){
+    		e = Adj.get(++unseenPointer);
+    		noOfAttempts++;
+    		if(noOfAttempts == Adj.size())
+    			return null;
+    	}
+    	return e;
     }
 }

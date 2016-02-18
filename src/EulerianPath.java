@@ -1,6 +1,7 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -37,20 +38,10 @@ public class EulerianPath {
 		while(current.otherEnd(current_v) != source){
 			current.seen = true;
 			current_v.numOfSeenEdges++;
-			current_v.Unseen.remove(current);
-//			tour.add(current);
-			
 			//go to the next edge
 			current_v = current.otherEnd(current_v);
 			current_v.numOfSeenEdges++;
-			current_v.Unseen.remove(current);
-			current.next = current_v.Unseen.iterator().next();
-//			for (Edge e : current_v.Adj) {
-//				if(!e.seen){
-//					current.next = e;
-//					break;
-//				}
-//			}
+			current.next = current_v.getNextUnseenEdge();
 			if(current_v.Adj.size() - current_v.numOfSeenEdges >= 2)
 				mergeMap.put(current_v, current);
 			else if(mergeMap.containsKey(current_v))
@@ -60,42 +51,24 @@ public class EulerianPath {
 		current.seen = true;
 		current.next = first;
 		current_v.numOfSeenEdges++;
-		current_v.Unseen.remove(current);
 		source.numOfSeenEdges++;
-		source.Unseen.remove(current);
 		if(source.numOfSeenEdges >=2)
 			mergeMap.put(source, current);
-//		tour.add(current);
 		
 		while(!mergeMap.isEmpty()){
 			Entry<Vertex, Edge> entry = mergeMap.entrySet().iterator().next();
-			if(entry.getKey().Adj.size() - entry.getKey().numOfSeenEdges <= 2)
-				mergeMap.remove(entry.getKey());
-			Edge initial_edge = entry.getKey().Unseen.iterator().next();
-//			for (Edge e : entry.getKey().Adj) {
-//				if(!e.seen){
-//					initial_edge = e;
-//					break;
-//				}
-//			}
+			current_v = entry.getKey();
+			if(current_v.Adj.size() - current_v.numOfSeenEdges <= 2)
+				mergeMap.remove(current_v);
+			Edge initial_edge = current_v.getNextUnseenEdge();
 			current = initial_edge;
 			
-			current_v = entry.getKey();
 			while(current.otherEnd(current_v) != entry.getKey()){
 				current.seen = true;
 				current_v.numOfSeenEdges++;
-				current_v.Unseen.remove(current);
-//				System.out.println(current);
 				current_v = current.otherEnd(current_v);
 				current_v.numOfSeenEdges++;
-				current_v.Unseen.remove(current);
-				current.next = current_v.Unseen.iterator().next();
-//				for (Edge e : current_v.Adj) {
-//					if(!e.seen){
-//						current.next = e;
-//						break;
-//					}
-//				}
+				current.next = current_v.getNextUnseenEdge();
 				if(current_v.Adj.size() - current_v.numOfSeenEdges >= 2){
 					if(!mergeMap.containsKey(current_v))
 						mergeMap.put(current_v, current);
@@ -106,23 +79,19 @@ public class EulerianPath {
 			}
 			current.seen = true;
 			current_v.numOfSeenEdges++;
-			current_v.Unseen.remove(current);
 			current.otherEnd(current_v).numOfSeenEdges++;
-			current.otherEnd(current_v).Unseen.remove(current);
+			
+			//merge
 			Edge temp = entry.getValue().next;
 			current.next = temp;
 			entry.getValue().next = initial_edge;
-//			System.out.println(current);
 		}
-		
 		
 		Edge iter = first;
 		while(iter.next!=first){
-//			System.out.println(iter);
 			tour.add(iter);
 			iter = iter.next;
 		}
-//		System.out.println(iter);
 		tour.add(iter);
 		return tour;
 	}
@@ -130,10 +99,27 @@ public class EulerianPath {
 	{
 		if(tour.size()!=g.numEdges)
 			return false;
-		for (Edge edge : tour) {
-			if(!edge.seen)
+		Iterator<Edge> iter = tour.iterator();
+		Edge prev = null, current = null;
+		if(iter.hasNext()){
+			prev = iter.next();
+			if(!prev.seen)
 				return false;
-			edge.seen = false;
+			prev.seen = false;
+		}
+		while(iter.hasNext()){
+			current = iter.next();
+			if(!current.seen)
+				return false;
+			current.seen = false;
+			HashSet<Vertex> set = new HashSet<Vertex>();
+			set.add(prev.From);
+			set.add(prev.To);
+			set.add(current.From);
+			set.add(current.To);
+			if(set.size()!=3)
+				return false;
+			prev = current;
 		}
 		return true;
 	}
