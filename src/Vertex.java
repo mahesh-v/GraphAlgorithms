@@ -20,6 +20,7 @@ public class Vertex {
     
     //Additions for LP0
     public int numOfSeenEdges;
+    public HashSet<Edge> Unseen;
 
     /**
      * Constructor for the vertex
@@ -39,6 +40,7 @@ public class Vertex {
     componentNumber = 0;
     
     numOfSeenEdges = 0;
+    Unseen = new HashSet<Edge>();
     }
 
     /**

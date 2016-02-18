@@ -12,6 +12,7 @@ import java.util.Scanner;
 class Graph implements Iterable<Vertex> {
     public List<Vertex> verts; // array of vertices
     public int numNodes; // number of verices in the graph
+    public int numEdges;
 
     /**
      * Constructor for Graph
@@ -50,6 +51,8 @@ class Graph implements Iterable<Vertex> {
 	Edge e = new Edge(u, v, weight);
 	u.Adj.add(e);
 	v.Adj.add(e);
+	u.Unseen.add(e);
+	v.Unseen.add(e);
     }
 
     /**
@@ -130,6 +133,7 @@ class Graph implements Iterable<Vertex> {
 
 	// create a graph instance
 	Graph g = new Graph(n);
+	g.numEdges = m;
 	for (int i = 0; i < m; i++) {
 	    int u = in.nextInt();
 	    int v = in.nextInt();
