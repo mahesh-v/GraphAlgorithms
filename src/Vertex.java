@@ -51,15 +51,11 @@ public class Vertex {
     }
     
     public Edge getNextUnseenEdge(){
-    	unseenPointer = unseenPointer++%Adj.size();
-    	Edge e = Adj.get(unseenPointer);
-    	int noOfAttempts = 0;
+    	Edge e = Adj.get(unseenPointer++);
     	while(e.seen){
-    		e = Adj.get(++unseenPointer);
-    		unseenPointer = unseenPointer%Adj.size();
-    		noOfAttempts++;
-    		if(noOfAttempts == Adj.size())
+    		if(unseenPointer == Adj.size())
     			return null;
+    		e = Adj.get(unseenPointer++);
     	}
     	return e;
     }
