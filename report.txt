@@ -1,0 +1,41 @@
+************************************************************************
+CS 6301.002.  Implementation of Advanced Data Structures and Algorithms
+Spring 2016
+Long Project 0
+Submission by: Darshan Narayana Reddy and Mahesh Venkateswaran
+
+************************************************************************
+
+There are 8 source(.java) files and >10 test files which are in .txt format:
+
+1. Graph.java - Provided by the Professor. Modified to include a method to print the graph
+2. Vertex.java - Provided by the Professor. Modified to include fields required for our algorithms
+3. Edge.java - Provided by the Professor.
+
+4. EulerianPath.java - contains the solution to LP0, which is finding Eulerian Path / Cycle
+	Contains two methods as given in the problem description
+	a. One method to find Eulerian tour/ path if it exists
+	    -Given a Graph, we start from the source vertex, and start going over edges and marking them seen, also to keep track of
+	    the path , we link the edges using edge.next field.
+	    -For Tour, we make a initial tour from source back to source while keeping track of all the vertices which still had unseen
+	    edges.
+	     For Path, we make a initial tour from source(which is a vertex with least odd degree, and continue till we visit a vertex from where there
+	     are no more unseen edges, that should be another odd degree vertex from the Graph
+	    -Once the initial tour is complete, we pick one vertex from the initial tour which had unseen edges, and start another tour from that vertex
+	     once that tour is complete, merge it with the initial tour
+	    - Repeat above step till there are no vertices with unseen edges
+	    -At the end , start from the first edge, and add all the next edges to a linked List and return the tour
+	b. one method to verify if the path found out by method (a) is correct.
+
+
+
+For every problem, the graph is input using the readGraph() method. Any input may be given under the standard format and assumptions
+
+
+For the input lp0-big.txt the time for finding tour is ~2.2 seconds and ~.2 seconds to verify the tour
+    Starting eulerian...
+    Graph is a Eulerian. Starting find tour/path
+    Time taken to find tour = 2281
+    Algorithm correct
+    Total time taken = 2493
+
