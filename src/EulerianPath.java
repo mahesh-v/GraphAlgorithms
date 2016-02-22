@@ -1,16 +1,26 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.Scanner;
 
 
+/**
+ * @author Darshan and Mahesh
+ *
+ */
 public class EulerianPath {
 
-	static List<Edge> findEulerTour(Graph g)  // Return an Euler tour of g
+	/**
+	 * Takes the input graph and outputs a list of edges of the Euler tour/path in order
+	 * Assumption: The graph is connected
+	 * 
+	 * @param g The input graph
+	 * @return A list of edges that form the Euler tour/path
+	 */
+	public static List<Edge> findEulerTour(Graph g)  // Return an Euler tour of g
 	{
 		List<Edge> tour = new LinkedList<Edge>();
 		Vertex source = null;
@@ -28,6 +38,10 @@ public class EulerianPath {
 		Edge first = source.Adj.get(0);
 		HashMap<Vertex, Edge> mergeMap = new HashMap<Vertex, Edge>();
 		mergeMap.put(source, null);
+		
+		//Loop Invariants:
+		//The hash map contains the set of vertex and edge from which a secondary cycle may be formed 
+		// (initially the source vertex and null edge)
 		while(!mergeMap.isEmpty()){
 			Entry<Vertex, Edge> entry = mergeMap.entrySet().iterator().next();
 			Vertex current_v = entry.getKey();
@@ -37,16 +51,19 @@ public class EulerianPath {
 			Edge current = initial_edge;
 			
 			// Loop Invariants:
-			// current - The current edge being looked at while building the graph
-			// current_v - The current vertex being looked at while building the graph
+			// current - The current edge being looked at while building the cycle
+			// current_v - The current vertex being looked at while building the cycle
+			// entry.getValue == null implies that it is the first cycle/path.
 			while(entry.getValue() == null ||(entry.getValue()!= null && current.otherEnd(current_v) != entry.getKey())){
 				//mark edge as seen
 				current.seen = true;
 				current_v.numOfSeenEdges++;
+				
 				//move to the other end of edge and pick up next edge
 				current_v = current.otherEnd(current_v);
 				current_v.numOfSeenEdges++;
 				current.next = current_v.getNextUnseenEdge();
+				
 				//Add to map if possible initial point of a new loop
 				if(current_v.Adj.size() - current_v.numOfSeenEdges >= 2){
 					if(!mergeMap.containsKey(current_v))
@@ -55,8 +72,7 @@ public class EulerianPath {
 				else if(mergeMap.containsKey(current_v))
 					mergeMap.remove(current_v);
 				
-				
-				//if current is null, then Euler path possible.
+				//if current is null, then Euler path possible, or first cycle is complete
 				if(current.next == null){
 					if(!isPath){
 						current.next = initial_edge;
@@ -64,6 +80,7 @@ public class EulerianPath {
 					}
 					break;
 				}
+				
 				//move to next edge
 				current = current.next;
 			}
@@ -73,7 +90,8 @@ public class EulerianPath {
 				current_v = current.otherEnd(current_v);
 				current_v.numOfSeenEdges++;
 			}
-			//merge
+			
+			//merge secondary cycle with entry from map
 			if(entry.getValue()!= null){
 				Edge temp = entry.getValue().next;
 				current.next = temp;
@@ -109,12 +127,15 @@ public class EulerianPath {
 			return true;
 		Vertex v1 = start;
 		for (Edge edge : tour) {
+			
+			//Ensure an edge is not visited more than once
 			if(!edge.seen){
 				System.out.println("Edge repeated in tour");
 				return false;
 			}
 			edge.seen = false;
 			
+			//Check if consecutive edges are connected
 			Vertex v2 = edge.otherEnd(v1);
 			Edge next = edge.next;
 			if(next == null)
@@ -159,8 +180,7 @@ public class EulerianPath {
 	public static void main(String[] args) throws FileNotFoundException {
 		Scanner scanner = new Scanner(new File("lp0_test/lp0-big.txt"));
 		Graph g = Graph.readGraph(scanner, false);
-		System.out.println("Starting eulerian...");
-		if(testEulerian(g)){
+		if(testEulerian(g)){ //first check if the given graph contains a Eulerian
 			System.out.println("Graph is a Eulerian. Starting find tour/path");
 			long start = System.currentTimeMillis();
 			List<Edge> tour = findEulerTour(g);
@@ -180,7 +200,7 @@ public class EulerianPath {
 				System.out.println("Algorithm incorrect");
 			System.out.println("Total time taken = "+(System.currentTimeMillis()-start));
 			
-			//Uncomment print for small inputs
+			//Comment below lines for large inputs
 //			for (Edge edge : tour) {
 //				System.out.println(edge);
 //			}
@@ -205,10 +225,10 @@ SAMPLE INPUT:
 5 6 1
 
 SAMPLE OUTPUT:
-Starting eulerian...
-Time taken to find tour = 0
+Graph is a Eulerian. Starting find tour/path
+Time taken to find tour = 15
 Algorithm correct
-Total time taken = 0
+Total time taken = 15
 (1,2)
 (2,3)
 (1,3)

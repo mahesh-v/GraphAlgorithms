@@ -59,4 +59,17 @@ public class Vertex {
     	}
     	return e;
     }
+    
+    @Override
+    public int hashCode(){
+    	return this.name;
+    }
+    
+    @Override
+    public boolean equals(final Object o){
+    	if(o==null)
+    		return false;
+    	Vertex that = (Vertex)o;
+    	return this.name == that.name;
+    }
 }
