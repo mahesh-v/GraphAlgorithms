@@ -1,6 +1,4 @@
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * Created by Darshan and Mahesh on 3/3/2016.
@@ -20,7 +18,10 @@ public class MST {
     * */
     private void constructMST() {
         decreaseWeights();
-        System.out.print(weightOfMST);
+        Vertex unseenVertex = BFSandReturnUnreachedVertex();
+        if(unseenVertex == null){
+            System.out.println("MST complete");
+        }
     }
 
 
@@ -40,11 +41,41 @@ public class MST {
             }
 
             if(minimumWeightOfEdge > -1) {
-                weightOfMST+=minimumWeightOfEdge;
                 for (Edge e: v.revAdj) {
                     e.ReComputedWeight -= minimumWeightOfEdge;
                 }
             }
         }
+    }
+
+    private Vertex BFSandReturnUnreachedVertex() {
+        LinkedList<Vertex> queue = new LinkedList<Vertex>();
+        long treeWeight = 0;
+        Vertex root = g.getSourceVertex();
+        root.seen = true;
+        queue.add(root);
+
+        while (!queue.isEmpty()) {
+            Vertex v = queue.remove();
+            for (Edge e : v.Adj) {
+                if (e.ReComputedWeight == 0 && !e.otherEnd(v).seen) {
+                    queue.add(e.otherEnd(v));
+                    e.otherEnd(v).seen = true;
+                    treeWeight += e.Weight;
+                }
+            }
+        }
+
+        for(Vertex v: g) {
+            if(!v.seen){
+                return v;
+            }
+        }
+        weightOfMST = treeWeight;
+        return null;
+    }
+
+    private void markAllVerticesNotSeen() {
+
     }
 }
