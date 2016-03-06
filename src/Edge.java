@@ -6,6 +6,7 @@ public class Edge {
     public Vertex From; // head vertex
     public Vertex To; // tail vertex
     public int Weight;// weight of the arc
+    public int ReComputedWeight;// Weight for MST purposes
     public boolean seen;
     public Edge next;
 
@@ -23,6 +24,7 @@ public class Edge {
 	From = u;
 	To = v;
 	Weight = w;
+    ReComputedWeight = w;
     }
 
     /**
